@@ -17,13 +17,13 @@ LEFT_PANE=$(tmux display-message -p -t "$SESSION":0.0 '#{pane_id}')
 tmux send-keys -t "$LEFT_PANE" 'nvim .' C-m
 
 # Creating right pane
-RIGHT_PANE=$(tmux split-window -h -p 30 -t "$LEFT_PANE" -P -F '#{pane_id}')
+RIGHT_PANE=$(tmux split-window -h -p 25 -t "$LEFT_PANE" -P -F '#{pane_id}')
 
-# Right pane sending keys for initiaiting: Claude
-tmux send-keys -t "$RIGHT_PANE" "claude" C-m
+# Right pane sending keys for initiaiting: Codex
+tmux send-keys -t "$RIGHT_PANE" "codex" C-m
 
 # Creating bottom-left pane
-BOTTOM_LEFT_PANE=$(tmux split-window -v -p 25 -t "$LEFT_PANE" -P -F '#{pane_id}')
+BOTTOM_LEFT_PANE=$(tmux split-window -v -p 15 -t "$LEFT_PANE" -P -F '#{pane_id}')
 
 # Focus editor pane
 tmux select-pane -t "$LEFT_PANE"

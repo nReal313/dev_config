@@ -36,6 +36,9 @@ vim.api.nvim_create_autocmd("FileType", {
   end,
 })
 
+
+
+
 -- =========================================
 -- Bootstrap lazy.nvim
 -- =========================================
@@ -288,24 +291,43 @@ require("conform").setup({
 -- LSP
 -- =========================================
 local capabilities = require("blink.cmp").get_lsp_capabilities()
-
 local lspconfig = require("lspconfig")
 
-local servers = {
-  "lua_ls",
-  "clangd",
-  "gopls",
-  "pyright",
-  "ts_ls",
-}
+local function get_python_path()
+  local cwd = vim.fn.getcwd()
+  local venv_python = cwd .. "/.venv/bin/python"
 
-for _, server in ipairs(servers) do
-  if server ~= "lua_ls" then
-    lspconfig[server].setup({
-      capabilities = capabilities,
-    })
+  if vim.fn.executable(venv_python) == 1 then
+    return venv_python
   end
+
+  return "python3"
 end
+
+lspconfig.pyright.setup({
+  capabilities = capabilities,
+  settings = {
+    python = {
+      pythonPath = get_python_path(),
+      analysis = {
+        autoSearchPaths = true,
+        useLibraryCodeForTypes = true,
+      },
+    },
+  },
+})
+
+lspconfig.clangd.setup({
+  capabilities = capabilities,
+})
+
+lspconfig.gopls.setup({
+  capabilities = capabilities,
+})
+
+lspconfig.ts_ls.setup({
+  capabilities = capabilities,
+})
 
 lspconfig.lua_ls.setup({
   capabilities = capabilities,
@@ -319,9 +341,7 @@ lspconfig.lua_ls.setup({
       },
     },
   },
-})
-
--- Java: start jdtls only for Java buffers
+})-- Java: start jdtls only for Java buffers
 vim.api.nvim_create_autocmd("FileType", {
   pattern = "java",
   callback = function()

@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+
+SESSION="dev-$(basename "$PWD" | tr '/.@:' '_')"
+PROJECT="$PWD"
+
+
+if tmux has-session -t "$SESSION" 2>/dev/null; then
+    exec tmux attach -t "$SESSION"
+fi
+
+
+tmux new-session -d -s "$SESSION" -c "$PROJECT"
+
+# main pane: Neovim
+tmux send-keys -t "$SESSION":0.0 'nvim .' C-m
+
+# main pane bottom : shell 
+tmux split-window -v -p 25 -t "$SESSION":0.0
+
+# Focus editor pane
+tmux select-pane -t "$SESSION":0.0
+
+exec tmux attach -t "$SESSION"
+
+
+# not adding any AI support here

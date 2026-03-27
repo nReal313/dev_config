@@ -30,3 +30,8 @@ export PATH="$BUN_INSTALL/bin:$PATH"
 
 # local user binaries
 export PATH="$HOME/.local/bin:$PATH"
+
+
+if [ -f "$HOME/.bash_secrets" ]; then
+  . "$HOME/.bash_secrets"
+fi

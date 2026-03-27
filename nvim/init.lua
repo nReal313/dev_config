@@ -57,6 +57,7 @@ vim.lsp.config("pyright", {
     python = {
       pythonPath = get_python_path(),
       analysis = {
+        typeCheckingMode = "off",
         autoSearchPaths = true,
         useLibraryCodeForTypes = true,
       },

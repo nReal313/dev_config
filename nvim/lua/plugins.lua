@@ -19,6 +19,21 @@ require("lazy").setup({
       open_for_directories = true,
     },
   },
+
+  -- Lazygit
+  {
+    "kdheepak/lazygit.nvim",
+    cmd = {
+     "LazyGit",
+     "LazyGitConfig",
+     "LazyGitCurrentFile",
+     "LazyGitFilter",
+     "LazyGitFilterCurrentFile",
+  },
+  dependencies = {
+    "nvim-lua/plenary.nvim",
+    },
+  },
   
   -- search / picker
   {

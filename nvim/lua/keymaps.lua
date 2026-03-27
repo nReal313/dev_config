@@ -14,6 +14,11 @@ map("n", "<leader>h", ":nohlsearch<CR>", { silent = true })
 map("n", "<leader>e", "<cmd>Yazi<CR>", { desc = "Open Yazi" })
 map("n", "<leader>E", "<cmd>Yazi cwd<CR>", { desc = "Open Yazi in cwd" })
 
+
+-- Lazygit
+vim.keymap.set("n", "<leader>gg", "<cmd>LazyGit<cr>", { desc = "Open LazyGit" })
+
+
 -- telescope
 map("n", "<leader>ff", "<cmd>Telescope find_files<CR>", { desc = "Find files" })
 map("n", "<leader>fg", "<cmd>Telescope live_grep<CR>", { desc = "Live grep" })

@@ -1,16 +1,13 @@
 -- =========================================
 -- Theme
 -- =========================================
-require("catppuccin").setup({
-  flavour = "mocha",
-  integrations = {
-    telescope = true,
-    nvimtree = true,
-    gitsigns = true,
-    treesitter = true,
-    which_key = true,
+
+require("rose-pine").setup({
+  variant = "main",
+  dark_variant = "main",
+  styles = {
+    transparency = false,
   },
 })
-vim.cmd.colorscheme("catppuccin")
 
-
+vim.cmd("colorscheme rose-pine")

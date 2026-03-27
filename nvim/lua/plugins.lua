@@ -4,9 +4,10 @@
 -- =========================================
 require("lazy").setup({
   -- theme
+  
   {
-    "catppuccin/nvim",
-    name = "catppuccin",
+    "rose-pine/neovim",
+    name = "rose-pine",
     priority = 1000,
   },
 

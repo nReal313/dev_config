@@ -26,11 +26,12 @@ vim.opt.rtp:prepend(lazypath)
 require("lazy").setup(require("plugins"))
 require("theme")
 
+
+
 -- =========================================
 -- LSP
 -- =========================================
 local capabilities = require("blink.cmp").get_lsp_capabilities()
-local lspconfig = require("lspconfig")
 
 local function get_python_path()
   local cwd = vim.fn.getcwd()
@@ -43,8 +44,12 @@ local function get_python_path()
   return "python3"
 end
 
-lspconfig.pyright.setup({
+-- shared capabilities for all servers
+vim.lsp.config("*", {
   capabilities = capabilities,
+})
+
+vim.lsp.config("pyright", {
   settings = {
     python = {
       pythonPath = get_python_path(),
@@ -56,20 +61,11 @@ lspconfig.pyright.setup({
   },
 })
 
-lspconfig.clangd.setup({
-  capabilities = capabilities,
-})
+vim.lsp.config("clangd", {})
+vim.lsp.config("gopls", {})
+vim.lsp.config("ts_ls", {})
 
-lspconfig.gopls.setup({
-  capabilities = capabilities,
-})
-
-lspconfig.ts_ls.setup({
-  capabilities = capabilities,
-})
-
-lspconfig.lua_ls.setup({
-  capabilities = capabilities,
+vim.lsp.config("lua_ls", {
   settings = {
     Lua = {
       diagnostics = {
@@ -80,6 +76,14 @@ lspconfig.lua_ls.setup({
       },
     },
   },
+})
+
+vim.lsp.enable({
+  "pyright",
+  "clangd",
+  "gopls",
+  "ts_ls",
+  "lua_ls",
 })
 
 -- Java: start jdtls only for Java buffers
@@ -104,11 +108,7 @@ vim.api.nvim_create_autocmd("FileType", {
     local workspace_dir = vim.fn.stdpath("data") .. "/jdtls-workspace/" .. project_name
 
     local config = {
-      cmd = {
-        "jdtls",
-        "-data",
-        workspace_dir,
-      },
+      cmd = { "jdtls", "-data", workspace_dir },
       root_dir = root_dir,
       capabilities = capabilities,
     }
@@ -116,6 +116,3 @@ vim.api.nvim_create_autocmd("FileType", {
     jdtls.start_or_attach(config)
   end,
 })
-
-
-

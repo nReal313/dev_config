@@ -1,19 +1,18 @@
-
 -- =========================================
 -- Keymaps
 -- =========================================
 local map = vim.keymap.set
 
-vim.keymap.set("n", "<C-k>", "<C-w>k")
-vim.keymap.set("n", "<C-j>", "<C-w>j")
-vim.keymap.set("n", "<C-h>", "<C-w>h")
-vim.keymap.set("n", "<C-l>", "<C-w>l")
+map("n", "<C-k>", "<C-w>k")
+map("n", "<C-j>", "<C-w>j")
+map("n", "<C-h>", "<C-w>h")
+map("n", "<C-l>", "<C-w>l")
 
-vim.keymap.set("n", "<leader>h", ":nohlsearch<CR>", { silent = true })
+map("n", "<leader>h", ":nohlsearch<CR>", { silent = true })
 
--- tree
-map("n", "<leader>e", "<cmd>NvimTreeFindFile<CR>", { desc = "Focus tree / reveal file" })
-map("n", "<leader>E", "<cmd>NvimTreeToggle<CR>", { desc = "Toggle tree" })
+-- yazi
+map("n", "<leader>e", "<cmd>Yazi<CR>", { desc = "Open Yazi" })
+map("n", "<leader>E", "<cmd>Yazi cwd<CR>", { desc = "Open Yazi in cwd" })
 
 -- telescope
 map("n", "<leader>ff", "<cmd>Telescope find_files<CR>", { desc = "Find files" })
@@ -38,12 +37,6 @@ map("t", "<C-h>", [[<C-\><C-n><C-w>h]])
 map("t", "<C-j>", [[<C-\><C-n><C-w>j]])
 map("t", "<C-k>", [[<C-\><C-n><C-w>k]])
 map("t", "<C-l>", [[<C-\><C-n><C-w>l]])
-
--- split navigation
-map("n", "<C-h>", "<C-w>h")
-map("n", "<C-j>", "<C-w>j")
-map("n", "<C-k>", "<C-w>k")
-map("n", "<C-l>", "<C-w>l")
 
 -- buffer nav
 map("n", "<S-l>", "<cmd>bnext<CR>", { desc = "Next buffer" })

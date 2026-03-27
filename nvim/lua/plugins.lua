@@ -11,14 +11,15 @@ require("lazy").setup({
     priority = 1000,
   },
 
-  -- file explorer
+-- yazi
   {
-    "nvim-tree/nvim-tree.lua",
-    dependencies = {
-      "nvim-tree/nvim-web-devicons",
+    "mikavilpas/yazi.nvim",
+    event = "VeryLazy",
+    opts = {
+      open_for_directories = true,
     },
   },
-
+  
   -- search / picker
   {
     "nvim-telescope/telescope.nvim",
@@ -27,11 +28,6 @@ require("lazy").setup({
     },
   },
 
-  -- syntax
-  {
-    "nvim-treesitter/nvim-treesitter",
-    build = ":TSUpdate",
-  },
 
   -- statusline
   {
@@ -129,39 +125,6 @@ require("lualine").setup({
   },
 })
 
-require("nvim-tree").setup({
-  hijack_cursor = true,
-  sync_root_with_cwd = true,
-  update_focused_file = {
-    enable = true,
-    update_root = false,
-  },
-  view = {
-    width = 34,
-    preserve_window_proportions = true,
-  },
-  renderer = {
-    root_folder_label = false,
-    highlight_git = true,
-    icons = {
-      show = {
-        file = true,
-        folder = true,
-        folder_arrow = true,
-        git = true,
-      },
-    },
-  },
-  filters = {
-    dotfiles = false,
-  },
-  git = {
-    enable = true,
-    ignore = false,
-  },
-})
-
-
 require("neoscroll").setup({
   mappings = { "<C-u>", "<C-d>", "<C-b>", "<C-f>", "zt", "zz", "zb" },
   hide_cursor = true,
@@ -178,29 +141,6 @@ require("telescope").setup({
     sorting_strategy = "ascending",
     winblend = 0,
   },
-})
-
-require("nvim-treesitter.configs").setup({
-    ensure_installed = {
-    "c",
-    "lua",
-    "vim",
-    "vimdoc",
-    "query",
-    "bash",
-    "markdown",
-    "markdown_inline",
-    "json",
-    "yaml",
-    "go",
-    "python",
-    "javascript",
-    "typescript",
-    "java",
-    "tsx",
-  },
-  highlight = { enable = true },
-  indent = { enable = true },
 })
 
 require("mason").setup()

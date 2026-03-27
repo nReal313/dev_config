@@ -1,0 +1,32 @@
+approvals_reviewer = "user"
+model = "gpt-5.2-codex"
+model_reasoning_effort = "high"
+
+[projects."/Users/alyosha/dotfiles"]
+trust_level = "trusted"
+
+[projects."/Users/alyosha/metamp"]
+trust_level = "trusted"
+
+[notice.model_migrations]
+"gpt-5.3-codex" = "gpt-5.4"
+"gpt-5.2" = "gpt-5.4"
+"gpt-5.2-codex" = "gpt-5.4"
+
+[model_providers.openrouter]
+name = "OpenRouter"
+base_url = "https://openrouter.ai/api/v1"
+env_key = "OPENROUTER_API_KEY"
+wire_api = "responses"
+
+[profiles.oss]
+model_provider = "openrouter"
+model = "openai/gpt-oss-120b:free"
+
+[profiles.nemo]
+model_provider = "openrouter"
+model = "nvidia/nemotron-3-super-120b-a12b:free"
+
+[profiles.mini]
+model_provider = "openrouter"
+model = "minimax/minimax-m2.5:free"

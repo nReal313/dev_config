@@ -133,10 +133,22 @@ require("gitsigns").setup()
 
 require("lualine").setup({
   options = {
-    theme = "auto",
-    globalstatus = true,
-    section_separators = "",
-    component_separators = "",
+    theme = "rose-pine",
+  },
+  sections = {
+    lualine_a = { "mode" },
+    lualine_b = {
+      {
+        function()
+          return vim.fn.fnamemodify(vim.fn.getcwd(), ":t")
+        end,
+        icon = "",
+      },
+    },
+    lualine_c = { "filename" },
+    lualine_x = { "encoding", "fileformat", "filetype" },
+    lualine_y = { "progress" },
+    lualine_z = { "location" },
   },
 })
 

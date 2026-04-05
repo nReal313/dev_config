@@ -37,7 +37,7 @@ end, { desc = "Format file" })
 
 -- terminal
 map("n", "<leader>tt", "<cmd>belowright split | terminal<CR>", { desc = "Open terminal" })
-map("t", "<Esc>", [[<C-\><C-n>]])
+map("t", "<C-]>", [[<C-\><C-n>]])
 map("t", "<C-h>", [[<C-\><C-n><C-w>h]])
 map("t", "<C-j>", [[<C-\><C-n><C-w>j]])
 map("t", "<C-k>", [[<C-\><C-n><C-w>k]])
@@ -48,9 +48,9 @@ map("n", "<S-l>", "<cmd>bnext<CR>", { desc = "Next buffer" })
 map("n", "<S-h>", "<cmd>bprevious<CR>", { desc = "Previous buffer" })
 
 -- diagnostics
-map("n", "[d", vim.diagnostic.goto_prev, { desc = "Prev diagnostic" })
-map("n", "]d", vim.diagnostic.goto_next, { desc = "Next diagnostic" })
-map("n", "<leader>ld", vim.diagnostic.open_float, { desc = "Line diagnostics" })
+vim.keymap.set("n", "gl", vim.diagnostic.open_float, { desc = "Line diagnostics" })
+vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = "Previous diagnostic" })
+vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { desc = "Next diagnostic" })
 map("n", "<leader>lr", vim.lsp.buf.rename, { desc = "Rename symbol" })
 map("n", "<leader>la", vim.lsp.buf.code_action, { desc = "Code action" })
 map("n", "gd", vim.lsp.buf.definition, { desc = "Go to definition" })

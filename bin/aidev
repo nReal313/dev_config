@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+
+SESSION="startup-$(basename "$PWD" | tr '/.@:' '_')"
+PROJECT="$PWD"
+
+if tmux has-session -t "$SESSION" 2>/dev/null; then
+    exec tmux attach -t "$SESSION"
+fi
+
+COLS=$(tput cols)
+LINES=$(tput lines)
+
+tmux new-session -d -s "$SESSION" -c "$PROJECT" -x "$COLS" -y "$LINES"
+
+LEFT_PANE=$(tmux display-message -p -t "$SESSION":0.0 '#{pane_id}')
+tmux send-keys -t "$LEFT_PANE" 'nvim .' C-m
+
+RIGHT_PANE=$(tmux split-window -h -p 35 -t "$LEFT_PANE" -P -F '#{pane_id}')
+tmux send-keys -t "$RIGHT_PANE" 'codex' C-m
+
+tmux select-pane -t "$LEFT_PANE"
+
+exec tmux attach -t "$SESSION"

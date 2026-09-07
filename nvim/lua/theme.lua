@@ -60,6 +60,27 @@ local highlights = {
 	DiagnosticWarn = { ctermfg = 11 },
 	DiagnosticInfo = { ctermfg = 12 },
 	DiagnosticHint = { ctermfg = 14 },
+
+	Cursor = { ctermfg = 0, ctermbg = 15 },
+	lCursor = { ctermfg = 0, ctermbg = 15 },
+	TermCursor = { ctermfg = 0, ctermbg = 15 },
+	CursorLine = { ctermbg = 236 },
+	CursorLineNr = { ctermfg = 14, bold = true },
+
+	DiffAdd = { ctermfg = 15, ctermbg = 22 },
+	DiffChange = { ctermfg = 15, ctermbg = 22 },
+	DiffDelete = { ctermfg = 9, ctermbg = 52 },
+	DiffText = { ctermfg = 15, ctermbg = 28, bold = true },
+
+	GitSignsAdd = { ctermfg = 2 },
+	GitSignsChange = { ctermfg = 2 },
+	GitSignsDelete = { ctermfg = 9 },
+	GitSignsAddLn = { link = "DiffAdd" },
+	GitSignsChangeLn = { link = "DiffChange" },
+	GitSignsDeleteLn = { link = "DiffDelete" },
+	GitSignsAddInline = { link = "DiffText" },
+	GitSignsChangeInline = { link = "DiffText" },
+	GitSignsDeleteInline = { link = "DiffDelete" },
 }
 
 for group, opts in pairs(highlights) do

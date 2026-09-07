@@ -18,9 +18,33 @@ map("n", "<leader>e", "<cmd>Yazi<CR>", { desc = "Open Yazi" })
 map("n", "<leader>E", "<cmd>Yazi cwd<CR>", { desc = "Open Yazi in cwd" })
 
 
--- Lazygit
-vim.keymap.set("n", "<leader>gg", "<cmd>LazyGit<cr>", { desc = "Open LazyGit" })
-map("n", "<leader>gt", "<cmd>BlameToggle<CR>", { desc = "Toggle Git blame" })
+-- git
+map("n", "<leader>gg", "<cmd>Git<CR>", { desc = "Git status" })
+map("n", "<leader>gp", "<cmd>Gitsigns preview_hunk<CR>", { desc = "Preview Git hunk" })
+map("n", "<leader>gr", "<cmd>Gitsigns reset_hunk<CR>", { desc = "Reset Git hunk" })
+map("n", "<leader>gs", "<cmd>Gitsigns stage_hunk<CR>", { desc = "Stage Git hunk" })
+map("n", "<leader>gt", "<cmd>Gitsigns toggle_current_line_blame<CR>", { desc = "Toggle Git line blame" })
+map("n", "<leader>gb", function()
+  require("gitsigns").blame_line({ full = true })
+end, { desc = "Show Git line blame" })
+
+local function git_revision_file(command, prompt)
+  vim.ui.input({ prompt = prompt }, function(revision)
+    if not revision or revision == "" then
+      return
+    end
+
+    vim.api.nvim_cmd({ cmd = command, args = { revision .. ":%" } }, {})
+  end)
+end
+
+map("n", "<leader>gD", function()
+  git_revision_file("Gvdiffsplit", "Diff current file against revision: ")
+end, { desc = "Diff current file against Git revision" })
+
+map("n", "<leader>gE", function()
+  git_revision_file("Gedit", "Open current file from revision: ")
+end, { desc = "Open current file from Git revision" })
 
 
 -- telescope
@@ -52,6 +76,60 @@ map("t", "<C-l>", [[<C-\><C-n><C-w>l]])
 -- buffer nav
 map("n", "<S-l>", "<cmd>bnext<CR>", { desc = "Next buffer" })
 map("n", "<S-h>", "<cmd>bprevious<CR>", { desc = "Previous buffer" })
+
+-- structural navigation
+local function jump_to_enclosing_type()
+  local node = vim.treesitter.get_node()
+  if not node then
+    vim.notify("No syntax node under the cursor", vim.log.levels.WARN)
+    return
+  end
+
+  local type_nodes = {
+    -- Python / JavaScript / TypeScript
+    class_definition = true,
+    class_declaration = true,
+    class = true,
+    interface_declaration = true,
+    type_alias_declaration = true,
+
+    -- C / C++ / C# / Java
+    class_specifier = true,
+    struct_specifier = true,
+    union_specifier = true,
+    enum_specifier = true,
+    struct_declaration = true,
+    enum_declaration = true,
+    record_declaration = true,
+    annotation_type_declaration = true,
+
+    -- Rust
+    impl_item = true,
+    struct_item = true,
+    enum_item = true,
+    trait_item = true,
+
+    -- Kotlin / PHP / Ruby and similar parsers
+    object_declaration = true,
+    trait_declaration = true,
+    module = true,
+  }
+
+  while node do
+    if type_nodes[node:type()] then
+      local row, col = node:start()
+      vim.cmd("normal! m'")
+      vim.api.nvim_win_set_cursor(0, { row + 1, col })
+      vim.cmd("normal! zz")
+      return
+    end
+    node = node:parent()
+  end
+
+  vim.notify("No enclosing class/type found", vim.log.levels.INFO)
+end
+
+map("n", "gC", jump_to_enclosing_type, { desc = "Jump to enclosing type" })
 
 -- diagnostics
 vim.keymap.set("n", "gl", vim.diagnostic.open_float, { desc = "Line diagnostics" })
